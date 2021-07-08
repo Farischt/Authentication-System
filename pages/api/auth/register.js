@@ -1,4 +1,5 @@
 import Database from "@/server/database"
+import EmailService from "@/server/mails/index"
 
 export default async (req, res) => {
   if (req.method === "POST") {
@@ -17,6 +18,11 @@ export default async (req, res) => {
     } else if (typeof req.body.repeatPassword !== "string") {
       res.statusCode = 400
       return res.json({ error: "missing_repeat_password" })
+    }
+
+    if (await Database.User.emailTaken(req.body.email)) {
+      res.statusCode = 400
+      return res.json({ error: "email_taken" })
     }
 
     //? Password strength
@@ -42,26 +48,24 @@ export default async (req, res) => {
     }
 
     const { email, first_name, last_name, password } = req.body
-
-    if (await Database.User.emailTaken(email)) {
-      res.statusCode = 400
-      return res.json({ error: "email_taken" })
-    }
-
     const user = await Database.User.build({
       first_name,
       last_name,
       email,
     })
 
-    //TODO : EmailService to send a verification
-
     await user.setPassword(password)
     await user.save()
 
-    await Database.AccountConfirmationToken.create({
+    const token = await Database.AccountConfirmationToken.create({
       user_id: user.id,
     })
+
+    await EmailService.sendAccountConfirmationMail(
+      user.email,
+      user.first_name,
+      token.token
+    )
 
     res.statusCode = 200
     res.json({ success: true })

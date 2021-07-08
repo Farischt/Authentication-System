@@ -4,12 +4,12 @@ import bcryptjs from "bcryptjs"
 const SALT_ROUND = 10
 
 class User extends Model {
-  static async get(email) {
-    return email && (await User.findOne({ where: { email } }))
+  static async get(id) {
+    return id && (await User.findByPk(id))
   }
 
   static async emailTaken(email) {
-    return email && (await this.get(email)) ? true : false
+    return email && (await User.findOne({ where: { email } })) ? true : false
   }
 
   async checkPassword(password) {

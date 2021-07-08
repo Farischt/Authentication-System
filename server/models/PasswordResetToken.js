@@ -1,9 +1,14 @@
-import { Sequelize, DataTypes, Model } from "sequelize"
+import { Sequelize, Model, DataTypes } from "sequelize"
+import Database from "@/server/database"
 
-class AuthToken extends Model {}
+class PasswordResetToken extends Model {
+  async getUser() {
+    return await Database.User.findOne({ where: { id: this.user_id } })
+  }
+}
 
 export default (sequelize, User) =>
-  AuthToken.init(
+  PasswordResetToken.init(
     {
       token: {
         type: DataTypes.UUID,
@@ -14,7 +19,7 @@ export default (sequelize, User) =>
 
       user_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
         references: {
@@ -25,6 +30,6 @@ export default (sequelize, User) =>
     },
     {
       sequelize,
-      modelName: "AuthToken",
+      modelName: "PasswordResetToken",
     }
   )

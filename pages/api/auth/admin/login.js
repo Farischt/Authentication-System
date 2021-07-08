@@ -26,7 +26,7 @@ export default async (req, res) => {
     } else if (!(await user.checkPassword(req.body.password))) {
       res.statusCode = 401
       return res.json({ error: "invalid_credentials" })
-    } else if (user.admin) {
+    } else if (!user.admin) {
       res.statusCode = 401
       return res.json({ error: "invalid_credentials" })
     }
