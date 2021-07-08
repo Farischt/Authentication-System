@@ -7,8 +7,9 @@
 ## Instalation
 
 First, you'll need node.js and node package manager "npm" or "yarn" installed : [https://nodejs.org/en/].
-Our version of node.js : v14.17.0
-Our version of npm : v7.12.1
+
+- Our version of node.js : v14.17.0
+- Our version of npm : v7.12.1
 
 ## Technologies
 
@@ -46,6 +47,8 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+Go back to file /server/database.js and switch back to false
 
 ## Learn More
 
