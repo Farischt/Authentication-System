@@ -1,81 +1,62 @@
 import { useState } from "react"
+import { useRouter } from "next/router"
+import Link from "next/link"
 
-export default function Home({}) {
-  const [user, setUser] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    repeatPassword: "",
-  })
+import AuthApi from "@/client/Auth"
+
+export default function Home({ user }) {
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
 
-  const handleChange = (event) => {
-    if (error) setError("")
-
-    setUser((state) => ({ [event.target.name]: event.target.value, ...state }))
-  }
-
-  const handleSubmit = async (event) => {
+  const handleLogout = async (event) => {
     event.preventDefault()
+    setLoading(true)
+    try {
+      await AuthApi.logout()
+      setLoading(false)
+      router.replace(router.asPath)
+    } catch (error) {
+      console.log(error.message)
+      setLoading(false)
+    }
   }
 
   return (
-    <form method="POST" onSubmit={handleSubmit}>
-      <h1> Sign up </h1>
-      <input
-        type="text"
-        name="first_name"
-        placeholder="First name"
-        value={user.first_name}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        name="last_name"
-        placeholder="Last name"
-        value={user.last_name}
-        onChange={handleChange}
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={user.email}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={user.password}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="repeatPassword"
-        placeholder="Password"
-        value={user.repeatPassword}
-        onChange={handleChange}
-      />
-      <button type="submit"> Send </button>
-    </form>
+    <div>
+      <h1> Fullstack Auth System</h1>
+      {!user && (
+        <nav>
+          <Link href="/auth/register">
+            <a> register </a>
+          </Link>
+          <br /> {/* to be deleted */}
+          <Link href="/auth">
+            <a> login </a>
+          </Link>
+        </nav>
+      )}
+      {user && (
+        <>
+          <p> Connected as {user.first_name} </p>{" "}
+          <button onClick={handleLogout} disabled={loading}>
+            {loading ? "Loading..." : "Log out"}
+          </button>
+        </>
+      )}
+    </div>
   )
 }
 
-import Database from "@/server/database"
+import Backend from "@/server/index"
 
-export const getServerSideProps = (context) => {
-  const user = Database.User.findOne({
-    where: {
-      email: "test",
-    },
-  })
+export const getServerSideProps = async (context) => {
+  const user = await Backend.getAuthenticatedUser(context)
 
   return {
     props: {
-      success: true,
+      user: user && {
+        first_name: user.first_name,
+      },
     },
   }
 }
