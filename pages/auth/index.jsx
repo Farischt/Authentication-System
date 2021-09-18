@@ -6,7 +6,6 @@ import AuthApi from "@/client/Auth"
 
 export default function LoginPage() {
   const router = useRouter()
-
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -27,9 +26,9 @@ export default function LoginPage() {
     event.preventDefault()
     setLoading(true)
     try {
-      const response = await AuthApi.login(credentials)
+      await AuthApi.login(credentials)
       setLoading(false)
-      response.data.admin ? router.push("/admin") : router.push("/")
+      router.push("/")
     } catch (error) {
       if (error.response.data.error) {
         switch (error.response.data.error) {
