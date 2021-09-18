@@ -2,6 +2,19 @@ import cookie from "cookie"
 import Database from "@/server/database"
 
 class Backend {
+  /**
+   * @param  {NextApiContext} context
+   * @returns {String}
+   */
+  getIpAddress(context) {
+    console.log(context.req.socket.remoteAddress)
+    return context.req.socket.remoteAddress
+  }
+
+  /**
+   * @param  {NextApiContext} context
+   * @param  {String} token
+   */
   async login(context, token) {
     context.res.setHeader(
       "Set-Cookie",
@@ -15,7 +28,16 @@ class Backend {
     )
   }
 
+  /**
+   * @param  {NextApiContext} context
+   * @returns {Object}
+   */
   async logout(context) {
+    const token =
+      context.req.cookies.authToken &&
+      (await Database.AuthToken.findByPk(context.req.cookies.authToken))
+    token && (await token.destroy())
+
     context.res.setHeader(
       "Set-Cookie",
       cookie.serialize("authToken", null, {
@@ -28,18 +50,19 @@ class Backend {
     )
   }
 
+  /**
+   * @param  {NextApiContext} context
+   * @returns {Object}
+   */
   async getAuthenticatedUser(context) {
-    if (!context.req.cookies.authToken) {
-      return null
-    }
+    if (!context.req.cookies.authToken) return null
 
     const token = await Database.AuthToken.findByPk(
       context.req.cookies.authToken
     )
 
-    if (!token) {
-      return null
-    } else if (this.hasAuthTokenExpired(token)) {
+    if (!token) return null
+    else if (this.hasAuthTokenExpired(token)) {
       context.res.setHeader(
         "Set-Cookie",
         cookie.serialize("authToken", null, {
@@ -50,14 +73,17 @@ class Backend {
           path: "/",
         })
       )
+      await token.destroy()
       return null
     }
 
-    const user = await Database.User.findByPk(token.user_id)
-    if (!user) return null
-    return user
+    return (await Database.User.findByPk(token.user_id)) || null
   }
 
+  /**
+   * @param  {Object} token
+   * @returns {Boolean}
+   */
   hasAuthTokenExpired(token) {
     return Date.now() - new Date(token.createdAt).getTime() + 60 * 60 <= 0
   }
