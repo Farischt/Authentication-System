@@ -27,13 +27,13 @@ class EmailService {
       await this.transporter.sendMail({
         from: CREDENTIALS.APP_EMAIL,
         to: to,
-        subject: "Confirmez votre adresse mail !",
-        text: "Confirmez votre adresse mail !",
+        subject: " Please confirm your email adress !",
+        text: " Please confirm your email adress !",
         html: `<div> 
-                 <h1> Merci pour votre inscription ${name} &#129321; ! </h1>
-                 <p> Afin de finaliser votre inscription, merci de cliquer sur ce <a href="${WEBSITE_URL}/auth/${encodeURIComponent(
+                 <h1> Thanks for your registration ${name} &#129321; ! </h1>
+                 <p> In order to complete your registration and to verify your account, please follow this <a href="${WEBSITE_URL}/auth/${encodeURIComponent(
           code
-        )}"> lien </a> </p>
+        )}"> link </a> </p>
                </div> `,
       })
     } catch (error) {
