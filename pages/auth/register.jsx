@@ -17,7 +17,6 @@ export default function RegisterPage({}) {
 
   const handleChange = (event) => {
     if (error) setError("")
-
     setUser((state) => ({ ...state, [event.target.name]: event.target.value }))
   }
 
@@ -126,5 +125,9 @@ export default function RegisterPage({}) {
 import { RedirectAuthenticatedUser } from "@/lib/auth"
 
 export const getServerSideProps = async (context) => {
-  return await RedirectAuthenticatedUser(context)
+  return (
+    (await RedirectAuthenticatedUser(context)) || {
+      props: { authorized: true },
+    }
+  )
 }

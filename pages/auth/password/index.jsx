@@ -68,5 +68,9 @@ export default function PasswordRequestPage() {
 import { RedirectAuthenticatedUser } from "@/lib/auth"
 
 export const getServerSideProps = async (context) => {
-  return await RedirectAuthenticatedUser(context)
+  return (
+    (await RedirectAuthenticatedUser(context)) || {
+      props: { authorized: true },
+    }
+  )
 }
