@@ -99,6 +99,7 @@ export default function PasswordResetPage({ token }) {
 
 import Backend from "@/server/index"
 import Database from "@/server/database"
+import { isUUID } from "@/lib/validator"
 
 export const getServerSideProps = async (context) => {
   if (await Backend.getAuthenticatedUser(context)) {
@@ -110,7 +111,11 @@ export const getServerSideProps = async (context) => {
     }
   }
 
-  const token = await Database.PasswordResetToken.findByPk(context.params.token)
+  const token =
+    context.params.token &&
+    isUUID(context.params.token) &&
+    (await Database.PasswordResetToken.findByPk(context.params.token))
+
   if (!token || token.createdAt < Date.now() - 60 * 60 * 1000) {
     return {
       redirect: {

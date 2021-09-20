@@ -19,7 +19,7 @@ export default function AccountConfirmationPage({ email, first_name }) {
 }
 
 import Backend from "@/server/index"
-import Database from "@/server/database"
+import { confirmUserAccount } from "@/lib/auth"
 
 export const getServerSideProps = async (context) => {
   if (await Backend.getAuthenticatedUser(context)) {
@@ -31,39 +31,5 @@ export const getServerSideProps = async (context) => {
     }
   }
 
-  const { confirmationToken } = context.params
-  const validToken =
-    confirmationToken &&
-    (await Database.AccountConfirmationToken.findByPk(confirmationToken))
-
-  if (!validToken) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    }
-  }
-
-  const user = await Database.User.get(validToken.user_id)
-
-  if (!user || user.verified) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    }
-  }
-  user.verified = true
-  await user.save()
-  // await validToken.destroy()
-
-  return {
-    props: {
-      success: true,
-      email: user.email,
-      first_name: user.first_name,
-    },
-  }
+  return await confirmUserAccount(context)
 }
