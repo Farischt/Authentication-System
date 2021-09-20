@@ -7,7 +7,6 @@ class Backend {
    * @returns {String}
    */
   getIpAddress(context) {
-    console.log(context.req.socket.remoteAddress)
     return context.req.socket.remoteAddress
   }
 
@@ -52,11 +51,10 @@ class Backend {
 
   /**
    * @param  {NextApiContext} context
-   * @returns {Object}
+   * @returns {Object} user
    */
   async getAuthenticatedUser(context) {
     if (!context.req.cookies.authToken) return null
-
     const token = await Database.AuthToken.findByPk(
       context.req.cookies.authToken
     )
@@ -76,7 +74,6 @@ class Backend {
       await token.destroy()
       return null
     }
-
     return (await Database.User.findByPk(token.user_id)) || null
   }
 
