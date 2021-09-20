@@ -46,13 +46,13 @@ class EmailService {
       await this.transporter.sendMail({
         from: CREDENTIALS.APP_EMAIL,
         to,
-        subject: "Demande de réinitialisation de votre mot de passe !",
-        text: "Demande de réinitialisation de votre mot de passe !",
+        subject: "Password reset request",
+        text: "You requested for a new password ?",
         html: `<div> 
-                  <h1> Une demande de réinitialisation de votre mot de passe a été faite. </h1> 
-                  <p> Afin de créer un nouveau mot de passe, merci de cliquer sur ce <a href="${WEBSITE_URL}/auth/password/${encodeURIComponent(
+                  <h1> A request to reset your password has been made ! </h1> 
+                  <p> In order to reset your password, make sur to click this <a href="${WEBSITE_URL}/auth/password/${encodeURIComponent(
           token
-        )}"> lien </a></p>
+        )}"> link </a></p>
                </div>
         `,
       })
@@ -66,9 +66,9 @@ class EmailService {
       await this.transporter.sendMail({
         from: CREDENTIALS.APP_EMAIL,
         to,
-        subject: "Alerte de sécurité !",
-        text: "Alerte de sécurité !",
-        html: `<div> <h1> Votre mot de passe a été modifié ! </h1> <p> Bonjour ${first_name}, votre mot de passe a été modifié le : ${date.toUTCString()} ! </p>  </div>`,
+        subject: " Security Warning !",
+        text: " Security Warning !",
+        html: `<div> <h1> Your password has been changed ! </h1> <p> Hi ${first_name}, your password has been changed on : ${date.toUTCString()} ! </p>  </div>`,
       })
     } catch (error) {
       console.log("Password reset confirmation email not sent ! ")
