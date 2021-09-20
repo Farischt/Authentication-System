@@ -2,6 +2,7 @@ import { useState } from "react"
 import Link from "next/link"
 
 import AuthApi from "@/client/Auth"
+import Layout from "@/components/layout"
 
 export default function RegisterPage({}) {
   const [user, setUser] = useState({
@@ -61,81 +62,69 @@ export default function RegisterPage({}) {
   }
 
   return (
-    <form method="POST" onSubmit={handleRegister}>
-      <h1> Sign up </h1>
-      <input
-        type="text"
-        name="first_name"
-        placeholder="First name"
-        value={user.first_name}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="last_name"
-        placeholder="Last name"
-        value={user.last_name}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={user.email}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={user.password}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="password"
-        name="repeatPassword"
-        placeholder="Password"
-        value={user.repeatPassword}
-        onChange={handleChange}
-        required
-      />
-      {loading && <p> loading </p>}
-      {error && <p> {error} </p>}
-      <Link href="/auth">
-        <a> Log in </a>
-      </Link>
-      <button
-        type="submit"
-        disabled={
-          user.password !== user.repeatPassword || user.password.length < 8
-        }
-      >
-        {" "}
-        Send{" "}
-      </button>
-    </form>
+    <Layout user={null}>
+      <form method="POST" onSubmit={handleRegister}>
+        <h1> Sign up </h1>
+        <input
+          type="text"
+          name="first_name"
+          placeholder="First name"
+          value={user.first_name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="last_name"
+          placeholder="Last name"
+          value={user.last_name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={user.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={user.password}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="repeatPassword"
+          placeholder="Password"
+          value={user.repeatPassword}
+          onChange={handleChange}
+          required
+        />
+        {loading && <p> loading </p>}
+        {error && <p> {error} </p>}
+        <button
+          type="submit"
+          disabled={
+            user.password !== user.repeatPassword || user.password.length < 8
+          }
+        >
+          Submit
+        </button>
+        <Link href="/auth">
+          <a> Or login </a>
+        </Link>
+      </form>
+    </Layout>
   )
 }
 
-import Backend from "@/server/index"
+import { RedirectAuthenticatedUser } from "@/lib/auth"
 
 export const getServerSideProps = async (context) => {
-  if (await Backend.getAuthenticatedUser(context)) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    }
-  }
-
-  return {
-    props: {
-      authorized: true,
-    },
-  }
+  return await RedirectAuthenticatedUser(context)
 }

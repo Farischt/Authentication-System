@@ -1,8 +1,10 @@
 import Link from "next/link"
 
+import Layout from "@/components/layout"
+
 export default function AccountConfirmationPage({ email, first_name }) {
   return (
-    <>
+    <Layout user={null}>
       <h1> Your account is verified ! </h1>
       <p>
         {" "}
@@ -12,7 +14,7 @@ export default function AccountConfirmationPage({ email, first_name }) {
           <a> login </a>
         </Link>{" "}
       </p>
-    </>
+    </Layout>
   )
 }
 
