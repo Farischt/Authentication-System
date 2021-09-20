@@ -19,9 +19,15 @@ class AuthApi {
     return await axios.post(`${this.URI}/logout`)
   }
 
-  async requestPassowrd() {}
+  async requestPassowrd(email) {
+    return await axios.post(`${this.URI}/password/request`, {
+      email,
+    })
+  }
 
-  async resetPassword() {}
+  async resetPassword(passwordsData) {
+    return await axios.patch(`${this.URI}/password/confirm`, passwordsData)
+  }
 }
 
 export default new AuthApi()
