@@ -68,7 +68,9 @@ class EmailService {
         to,
         subject: " Security Warning !",
         text: " Security Warning !",
-        html: `<div> <h1> Your password has been changed ! </h1> <p> Hi ${first_name}, your password has been changed on : ${date.toUTCString()} ! </p>  </div>`,
+        html: `<div> <h1> Your password has been changed ! </h1> <p> Hi ${first_name}, your password has been changed on : ${new Date(
+          date
+        )} ! </p>  </div>`,
       })
     } catch (error) {
       console.log("Password reset confirmation email not sent ! ")

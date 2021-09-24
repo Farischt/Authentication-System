@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
 import Link from "next/link"
+import { toast } from "react-toastify"
 
 import AuthApi from "@/client/Auth"
 import Layout from "@/components/layout"
@@ -27,8 +28,9 @@ export default function LoginPage() {
     event.preventDefault()
     setLoading(true)
     try {
-      await AuthApi.login(credentials)
+      const res = await AuthApi.login(credentials)
       setLoading(false)
+      toast.info(`Welcome back ${res.data.first_name}`)
       router.push("/")
     } catch (error) {
       if (error.response.data.error) {

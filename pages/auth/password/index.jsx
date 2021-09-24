@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { toast } from "react-toastify"
 
 import AuthApi from "@/client/Auth"
 import Layout from "@/components/layout"
@@ -21,6 +22,7 @@ export default function PasswordRequestPage() {
     try {
       await AuthApi.requestPassowrd(email)
       setSuccess("An email has been sent !")
+      toast.success("An email has been sent !")
       setLoading(false)
     } catch (err) {
       if (err.response.data.error) {

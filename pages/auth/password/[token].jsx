@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
+import { toast } from "react-toastify"
 
 import AuthApi from "@/client/Auth"
 import Layout from "@/components/layout"
@@ -25,6 +26,7 @@ export default function PasswordResetPage({ token }) {
     try {
       await AuthApi.resetPassword(data)
       setLoading(false)
+      toast.success("Your password has been changed !")
       router.push("/")
     } catch (error) {
       if (error.response.data.error) {

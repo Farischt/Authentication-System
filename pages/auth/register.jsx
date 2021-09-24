@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Link from "next/link"
+import { toast } from "react-toastify"
 
 import AuthApi from "@/client/Auth"
 import Layout from "@/components/layout"
@@ -26,6 +27,7 @@ export default function RegisterPage({}) {
     try {
       await AuthApi.register(user)
       setLoading(false)
+      toast.success("Successfully signed up !")
     } catch (error) {
       if (error.response.data.error) {
         switch (error.response.data.error) {

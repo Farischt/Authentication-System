@@ -24,28 +24,29 @@ export default function NavBar({ user }) {
   return (
     <div>
       <nav>
+        {user && <p> Welcome back {user.first_name} </p>}
         <Link href="/">
-          <a> Home </a>
+          <a>Home</a>
         </Link>
-        {!user && (
-          <>
-            <Link href="/auth">
-              <a> Login </a>
-            </Link>
-            <Link href="/auth/register">
-              <a> Sign up </a>
-            </Link>
-          </>
+        {user && (
+          <Link href="/profile">
+            <a>Profile</a>
+          </Link>
         )}
       </nav>
+      {!user && (
+        <div>
+          <Link href="/auth">
+            <a>Login</a>
+          </Link>
+        </div>
+      )}
       {user && (
-        <>
-          <p> Connected as {user.first_name} </p>{" "}
-          {loading && <p> Loading... </p>}
+        <div>
           <button onClick={handleLogout} disabled={loading}>
-            Log out
+            {loading ? "Loading..." : "Log out"}
           </button>
-        </>
+        </div>
       )}
     </div>
   )
