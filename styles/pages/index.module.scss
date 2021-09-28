@@ -1,0 +1,32 @@
+@import "../global/index.module";
+
+.container {
+  background-color: red;
+}
+
+.hero {
+  background-color: $color-secondary;
+  padding: 2rem;
+
+  .content {
+    width: 55%;
+    padding: 6rem 4rem;
+    position: relative;
+
+    .title {
+      color: #030431;
+      font-weight: 800;
+      font-size: 6rem;
+      margin-bottom: 4rem;
+      text-transform: capitalize;
+      // text-align: center;
+    }
+
+    // .center {
+    //   position: absolute;
+    //   top: 70%;
+    //   left: 30%;
+    //   transform: translateY(-50%, -50%);
+    // }
+  }
+}

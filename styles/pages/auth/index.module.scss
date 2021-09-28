@@ -1,0 +1,54 @@
+@import "../../global/index.module";
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem;
+}
+
+.form {
+  flex: 0 0 40%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 8rem;
+  box-shadow: $shadow-light;
+
+  & > *:not(:first-child) {
+    margin-top: 2rem;
+  }
+
+  .title {
+    text-align: center;
+    color: $color-primary;
+    font-size: 3rem;
+  }
+
+  .input {
+    font-family: inherit;
+    font-size: 1.5rem;
+    background-color: $color-grey-l-3;
+    color: black;
+    border: none;
+    // border-radius: 100px;
+    padding: 2rem;
+    margin-right: -4rem;
+    width: 100%;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-input-placeholder {
+      font-family: inherit;
+      color: $color-grey-d-2;
+      font-weight: 600;
+    }
+  }
+
+  .link {
+    text-align: center;
+    color: $color-primary;
+  }
+}

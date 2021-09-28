@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import Link from "next/link"
 import { toast } from "react-toastify"
 
+import styles from "@/styles/pages/auth/index.module.scss"
 import AuthApi from "@/client/Auth"
 import Layout from "@/components/layout"
 
@@ -50,34 +51,43 @@ export default function LoginPage() {
 
   return (
     <Layout user={null}>
-      <form method="POST" onSubmit={handleLogin}>
-        <h1> Login Page </h1>
-        <input
-          type="text"
-          name="email"
-          placeholder="Email..."
-          value={credentials.email}
-          onChange={handleCredentialsChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password..."
-          value={credentials.password}
-          onChange={handleCredentialsChange}
-          required
-        />
-        {loading && <p> Loading... </p>}
-        {error && <p> {error} </p>}
-        <Link href="/auth/password">
-          <a> Forgot password ? </a>
-        </Link>
-        <button type="submit"> Login </button>
-        <Link href="/auth/register">
-          <a> Or sign up </a>
-        </Link>
-      </form>
+      <div className={styles.container}>
+        <form className={styles.form} method="POST" onSubmit={handleLogin}>
+          <h1 className={styles.title}> Login </h1>
+          <input
+            type="text"
+            name="email"
+            placeholder="Email..."
+            className={styles.input}
+            value={credentials.email}
+            onChange={handleCredentialsChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password..."
+            className={styles.input}
+            value={credentials.password}
+            onChange={handleCredentialsChange}
+            required
+          />
+          {loading && <p> Loading... </p>}
+          {error && <p> {error} </p>}
+          <Link href="/auth/password">
+            <a className={styles.link}> Forgot password ? </a>
+          </Link>
+          <button
+            className={`${styles.btn} ${styles.btn__primary}`}
+            type="submit"
+          >
+            Login
+          </button>
+          <Link href="/auth/register">
+            <a className={styles.link}> Or sign up </a>
+          </Link>
+        </form>
+      </div>
     </Layout>
   )
 }

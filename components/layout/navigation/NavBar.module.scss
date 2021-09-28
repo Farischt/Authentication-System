@@ -1,0 +1,73 @@
+@import "../../../styles/global/index.module";
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10rem;
+  display: flex;
+  align-items: stretch;
+  box-shadow: $shadow-light;
+}
+
+.logoBox {
+  flex: 0 0 15%;
+  background-color: $color-grey-l-3;
+  // background-color: #fff;
+
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .title {
+    font-size: 3rem;
+    font-weight: 600;
+    transition: transform 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+  }
+}
+
+.navigation {
+  flex: 0 0 70%;
+  background-color: #fff;
+  display: flex;
+  align-items: stretch;
+
+  .list {
+    flex: 1;
+    display: flex;
+  }
+
+  .item {
+    display: flex;
+    justify-content: center;
+  }
+
+  .link {
+    font-size: 1.5rem;
+    // font-weight: 600;
+    padding: 4rem 3rem;
+    cursor: pointer;
+    // color: black;
+
+    &:hover,
+    &__active {
+      border-bottom: 2px solid $color-primary;
+      color: $color-primary;
+    }
+  }
+}
+
+.actions {
+  flex: 1;
+  // background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

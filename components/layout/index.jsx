@@ -1,10 +1,11 @@
 import Navbar from "./navigation/NavBar"
+import styles from "./index.module.scss"
 
 export default function Layout({ children, user }) {
   return (
     <>
       <Navbar user={user} />
-      <div>{children}</div>
+      <div className={styles.main}>{children}</div>
     </>
   )
 }

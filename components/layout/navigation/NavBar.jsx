@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useRouter } from "next/router"
 import Link from "next/link"
 
+import styles from "./NavBar.module.scss"
 import AuthApi from "@/client/Auth"
 
 export default function NavBar({ user }) {
@@ -22,32 +23,43 @@ export default function NavBar({ user }) {
   }
 
   return (
-    <div>
-      <nav>
-        {user && <p> Welcome back {user.first_name} </p>}
-        <Link href="/">
-          <a>Home</a>
-        </Link>
-        {user && (
-          <Link href="/profile">
-            <a>Profile</a>
-          </Link>
-        )}
-      </nav>
-      {!user && (
-        <div>
-          <Link href="/auth">
-            <a>Login</a>
+    <header className={styles.container}>
+      <div className={styles.logoBox}>
+        <div className={styles.logo}>
+          <Link href="/" passHref>
+            <h2 className={styles.title}> AuthSys </h2>
           </Link>
         </div>
-      )}
+      </div>
+      <nav className={styles.navigation}>
+        <ul className={styles.list}>
+          <Link href="/">
+            <a className={styles.link}>Home</a>
+          </Link>
+          {user && (
+            <Link href="/profile">
+              <a className={styles.link}>Profile</a>
+            </Link>
+          )}
+          {!user && (
+            <Link href="/auth">
+              <a className={styles.link}>Login</a>
+            </Link>
+          )}
+        </ul>
+      </nav>
+
       {user && (
-        <div>
-          <button onClick={handleLogout} disabled={loading}>
+        <div className={styles.actions}>
+          <button
+            className={`${styles.btn} ${styles.btn__primary}`}
+            onClick={handleLogout}
+            disabled={loading}
+          >
             {loading ? "Loading..." : "Log out"}
           </button>
         </div>
       )}
-    </div>
+    </header>
   )
 }

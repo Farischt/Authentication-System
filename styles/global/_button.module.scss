@@ -1,0 +1,36 @@
+.btn {
+  padding: 2rem 4rem;
+  font-size: 1.7rem;
+  // letter-spacing: 3px;
+  border: none;
+  border-radius: $button-radius;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &__primary {
+    color: #fff;
+    background-color: $color-primary;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    box-shadow: $shadow-light;
+    transform: translateY(0);
+  }
+
+  &__disabled {
+    background-color: $color-grey-d-1;
+  }
+
+  &:disabled {
+    background: #ccc;
+  }
+}

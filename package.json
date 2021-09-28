@@ -19,5 +19,8 @@
     "react-dom": "17.0.2",
     "react-toastify": "^8.0.2",
     "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "node-sass": "5.0"
   }
 }
