@@ -1,32 +1,40 @@
 @import "../global/index.module";
 
 .container {
-  background-color: red;
+  // background-color: red;
+  min-height: 80vh;
+  position: relative;
 }
 
-.hero {
-  background-color: $color-secondary;
-  padding: 2rem;
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: $shadow-light;
+  padding: 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  .content {
-    width: 55%;
-    padding: 6rem 4rem;
-    position: relative;
+  .title {
+    text-align: center;
+    color: $color-primary;
+    font-size: 4rem;
+  }
 
-    .title {
-      color: #030431;
-      font-weight: 800;
-      font-size: 6rem;
-      margin-bottom: 4rem;
-      text-transform: capitalize;
-      // text-align: center;
-    }
+  .text {
+    text-align: center;
+    font-size: 2rem;
+  }
 
-    // .center {
-    //   position: absolute;
-    //   top: 70%;
-    //   left: 30%;
-    //   transform: translateY(-50%, -50%);
-    // }
+  .link {
+    font-style: italic;
+    color: $color-primary;
+  }
+
+  .center {
+    margin-top: 4rem;
+    width: 50%;
   }
 }
