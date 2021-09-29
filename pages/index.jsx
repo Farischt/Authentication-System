@@ -17,6 +17,7 @@ export default function Home({ user }) {
                 className={styles.link}
                 href="https://github.com/Farischt"
                 target="_blank"
+                rel="noreferrer"
               >
                 {" "}
                 Farischt{" "}
@@ -28,6 +29,7 @@ export default function Home({ user }) {
               className={styles.link}
               href="https://github.com/Farischt/Authentication-System"
               target="_blank"
+              rel="noreferrer"
             >
               Documentation here !
             </a>
