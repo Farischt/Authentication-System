@@ -1,0 +1,34 @@
+@import "../../global/index.module";
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem;
+}
+
+.main {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 8rem;
+  box-shadow: $shadow-light;
+
+  .title {
+    color: $color-primary;
+    text-align: center;
+    font-size: 3rem;
+  }
+
+  .text {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 1.4rem;
+  }
+
+  .center {
+    margin-top: 2rem;
+    width: 50%;
+  }
+}

@@ -34,13 +34,17 @@ export default function Home({ user }) {
               Documentation here !
             </a>
           </p>
-          <Link href="/auth" passhref>
-            <button
-              className={`${styles.btn} ${styles.btn__primary} ${styles.center}`}
-            >
-              Get Started !
-            </button>
-          </Link>
+          {!user ? (
+            <Link href="/auth" passhref>
+              <button
+                className={`${styles.btn} ${styles.btn__primary} ${styles.center}`}
+              >
+                Get Started !
+              </button>
+            </Link>
+          ) : (
+            <p className={styles.text}> Logged in as {user.first_name} </p>
+          )}
         </div>
       </div>
     </Layout>

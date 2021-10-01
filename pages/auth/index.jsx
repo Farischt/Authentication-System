@@ -55,7 +55,7 @@ export default function LoginPage() {
         <form className={styles.form} method="POST" onSubmit={handleLogin}>
           <h1 className={styles.title}> Login </h1>
           <input
-            type="text"
+            type="email"
             name="email"
             placeholder="Email..."
             className={styles.input}
@@ -71,15 +71,21 @@ export default function LoginPage() {
             value={credentials.password}
             onChange={handleCredentialsChange}
             required
+            minLength={8}
           />
-          {loading && <p> Loading... </p>}
-          {error && <p> {error} </p>}
+          {loading && <p className={styles.loading}> Loading... </p>}
+          {error && <p className={styles.error}> {error} </p>}
           <Link href="/auth/password">
             <a className={styles.link}> Forgot password ? </a>
           </Link>
           <button
-            className={`${styles.btn} ${styles.btn__primary}`}
             type="submit"
+            className={`${styles.btn} ${styles.btn__primary}`}
+            disabled={
+              credentials.email.length < 2 ||
+              credentials.password.length < 8 ||
+              loading
+            }
           >
             Login
           </button>

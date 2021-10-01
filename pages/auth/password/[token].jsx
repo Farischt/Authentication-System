@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 
+import styles from "@/styles/pages/auth/password/token.module.scss"
 import AuthApi from "@/client/Auth"
 import Layout from "@/components/layout"
 
@@ -64,37 +65,43 @@ export default function PasswordResetPage({ token }) {
 
   return (
     <Layout user={null}>
-      <form method="PATCH" onSubmit={handleSubmit}>
-        <h1> Please reset your password ! </h1>
-        <input readOnly value={token.email} />
-        <input
-          type="password"
-          name="newPassword"
-          placeholder="Enter a new password !"
-          value={data.newPassword}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="repeatPassword"
-          placeholder="Re enter your new password"
-          value={data.repeatPassword}
-          onChange={handleChange}
-        />
-        {loading && <p> loading </p>}
-        {error && <p> {error} </p>}
-        <button
-          type="submit"
-          disabled={
-            data.newPassword !== data.repeatPassword ||
-            data.newPassword.length < 8 ||
-            loading
-          }
-        >
-          Submit
-        </button>
-      </form>
+      <div className={styles.container}>
+        <form className={styles.form} method="PATCH" onSubmit={handleSubmit}>
+          <h1 className={styles.title}> Please reset your password ! </h1>
+          <input readOnly value={token.email} className={styles.input} />
+          <input
+            type="password"
+            name="newPassword"
+            placeholder="Enter a new password !"
+            className={styles.input}
+            value={data.newPassword}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="repeatPassword"
+            placeholder="Re enter your new password"
+            className={styles.input}
+            value={data.repeatPassword}
+            onChange={handleChange}
+            required
+          />
+          {loading && <p className={styles.loading}> loading </p>}
+          {error && <p className={styles.error}> {error} </p>}
+          <button
+            type="submit"
+            className={`${styles.btn} ${styles.btn__primary}`}
+            disabled={
+              data.newPassword !== data.repeatPassword ||
+              data.newPassword.length < 8 ||
+              loading
+            }
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </Layout>
   )
 }

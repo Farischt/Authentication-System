@@ -2,6 +2,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { toast } from "react-toastify"
 
+import styles from "@/styles/pages/auth/register.module.scss"
 import AuthApi from "@/client/Auth"
 import Layout from "@/components/layout"
 
@@ -64,62 +65,74 @@ export default function RegisterPage({}) {
 
   return (
     <Layout user={null}>
-      <form method="POST" onSubmit={handleRegister}>
-        <h1> Sign up </h1>
-        <input
-          type="text"
-          name="first_name"
-          placeholder="First name"
-          value={user.first_name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="last_name"
-          placeholder="Last name"
-          value={user.last_name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={user.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={user.password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="repeatPassword"
-          placeholder="Password"
-          value={user.repeatPassword}
-          onChange={handleChange}
-          required
-        />
-        {loading && <p> loading </p>}
-        {error && <p> {error} </p>}
-        <button
-          type="submit"
-          disabled={
-            user.password !== user.repeatPassword || user.password.length < 8
-          }
-        >
-          Submit
-        </button>
-        <Link href="/auth">
-          <a> Or login </a>
-        </Link>
-      </form>
+      <div className={styles.container}>
+        <form className={styles.form} method="POST" onSubmit={handleRegister}>
+          <h1 className={styles.title}> Sign up </h1>
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First name"
+            className={styles.input}
+            value={user.first_name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last name"
+            className={styles.input}
+            value={user.last_name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className={styles.input}
+            value={user.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className={styles.input}
+            value={user.password}
+            onChange={handleChange}
+            required
+            minLength={8}
+          />
+          <input
+            type="password"
+            name="repeatPassword"
+            placeholder="Password"
+            className={styles.input}
+            value={user.repeatPassword}
+            onChange={handleChange}
+            required
+            minLength={8}
+          />
+          {loading && <p className={styles.loading}> Loading... </p>}
+          {error && <p className={styles.error}> {error} </p>}
+          <button
+            type="submit"
+            className={`${styles.btn} ${styles.btn__primary}`}
+            disabled={
+              user.password !== user.repeatPassword ||
+              user.password.length < 8 ||
+              loading
+            }
+          >
+            Submit
+          </button>
+          <Link href="/auth">
+            <a className={styles.link}> Or login </a>
+          </Link>
+        </form>
+      </div>
     </Layout>
   )
 }

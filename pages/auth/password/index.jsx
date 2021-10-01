@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { toast } from "react-toastify"
 
+import styles from "@/styles/pages/auth/password/index.module.scss"
 import AuthApi from "@/client/Auth"
 import Layout from "@/components/layout"
 
@@ -45,20 +46,25 @@ export default function PasswordRequestPage() {
 
   return (
     <Layout user={null}>
-      <div>
-        <h1> You forgot your password ? </h1>
-        <form method="POST" onSubmit={handleSubmit}>
+      <div className={styles.container}>
+        <form className={styles.form} method="POST" onSubmit={handleSubmit}>
+          <h1 className={styles.title}> You forgot your password ? </h1>
           <input
             type="email"
             placeholder="Enter your email address..."
+            className={styles.input}
             value={email}
             onChange={handleEmailChange}
             required
           />
-          {loading && <p> Loading... </p>}
-          {error && <p> {error} </p>}
-          {success && <p> {success} </p>}
-          <button type="submit" disabled={loading}>
+          {loading && <p className={styles.loading}> Loading... </p>}
+          {error && <p className={styles.error}> {error} </p>}
+          {success && <p className={styles.success}> {success} </p>}
+          <button
+            className={`${styles.btn} ${styles.btn__primary}`}
+            type="submit"
+            disabled={loading || email.length < 2}
+          >
             Submit
           </button>
         </form>

@@ -1,4 +1,4 @@
-@import "../../global/index.module";
+@import "../../../global/index.module";
 
 .container {
   display: flex;
@@ -55,7 +55,8 @@
   }
 
   .error,
-  .loading {
+  .loading,
+  .success {
     text-align: center;
     font-size: 1.4rem;
   }
@@ -64,12 +65,11 @@
     color: $color-danger;
   }
 
-  .loading {
+  .success {
     color: $color-primary;
   }
 
-  .link {
-    text-align: center;
+  .loading {
     color: $color-primary;
   }
 }
