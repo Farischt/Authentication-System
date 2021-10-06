@@ -13,7 +13,7 @@ export default async (req, res) => {
 
     const user = await Database.User.findOne({
       where: {
-        email: req.body.email,
+        email: req.body.email.trim(),
       },
     })
 

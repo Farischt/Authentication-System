@@ -20,7 +20,9 @@ export default async (req, res) => {
       return res.json({ error: "missing_repeat_password" })
     }
 
-    if (await Database.User.emailTaken(req.body.email)) {
+    const email = req.body.email.trim()
+
+    if (await Database.User.emailTaken(email)) {
       res.statusCode = 400
       return res.json({ error: "email_taken" })
     }
@@ -47,7 +49,7 @@ export default async (req, res) => {
       return res.json({ error: "password_special_weakness" })
     }
 
-    const { email, first_name, last_name, password } = req.body
+    const { first_name, last_name, password } = req.body
     const user = await Database.User.build({
       first_name,
       last_name,
